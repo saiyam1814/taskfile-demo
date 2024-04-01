@@ -125,5 +125,5 @@ tasks:
   delete-cluster:
     desc: 'Delete the Civo Kubernetes cluster.'
     cmds:
-      - civo kubernetes delete "{{.CLUSTER_NAME}} -y"
+      - civo --region FRA1 kubernetes delete "{{.CLUSTER_NAME}} -y"
     silent: false
