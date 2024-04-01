@@ -2,8 +2,6 @@ name: Deploy and Test Apps
 
 on:
   push:
-    branches:
-      - main  # Adjust this as necessary
 
 jobs:
   deploy-and-test:
