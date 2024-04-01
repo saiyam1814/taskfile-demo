@@ -38,6 +38,6 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add ${{ github.workspace }}/results/app_install_results.txt
+        git add ${{ github.workspace }}/results/*
         git commit -s -m "[skip ci] app results" 
         git push 
