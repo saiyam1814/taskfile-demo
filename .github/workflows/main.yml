@@ -31,6 +31,7 @@ jobs:
 
     - name: Move Result File
       run: |
+        cat /tmp/app_install_results.txt
         mkdir -p ${{ github.workspace }}/results
         mv /tmp/app_install_results.txt ${{ github.workspace }}/results/app_install_results.txt
 
@@ -39,6 +40,9 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add ${{ github.workspace }}/results/app_install_results.txt
-        git commit -m "Add deployment results" --allow-empty
-        # Only push if there are changes to commit
-        git diff --quiet && git diff --staged --quiet || git push
+        git commit -s -m "[skip ci] app results" 
+        
+    - name: Push deploy manifests to local repo
+      uses: ad-m/github-push-action@master
+        with: 
+          github_token: ${{ secrets.AUTO_COMMIT_TOKEN }}    
