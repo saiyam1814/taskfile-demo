@@ -31,9 +31,8 @@ jobs:
 
     - name: Move Result File
       run: |
-        cat /tmp/app_install_results.txt
         mkdir -p ${{ github.workspace }}/results
-        mv /tmp/app_install_results.txt ${{ github.workspace }}/results/app_install_results.txt
+        mv /tmp/apps/* ${{ github.workspace }}/results/
 
     - name: Commit Results
       run: |
