@@ -58,7 +58,7 @@ tasks:
           if [ -n "{{.KUBE_VERSION}}" ]; then
             version_cmd="--version {{.KUBE_VERSION}}"
           fi
-          civo kubernetes create "{{.CLUSTER_NAME}}" --nodes=3 --applications="{{.APP_NAME}}" --remove-applications="{{.REMOVE_APPS}}" $version_cmd --wait
+          civo kubernetes create "{{.CLUSTER_NAME}}" --region=NYC1 --nodes=3 --applications="{{.APP_NAME}}" --remove-applications="{{.REMOVE_APPS}}" $version_cmd --wait
     vars:
       APP_NAME: '{{.APP_NAME}}'
 
@@ -71,7 +71,7 @@ tasks:
           end=$((end + 180)) # 3 minutes from now
           while true; do
             echo "Attempting to retrieve kubeconfig..."
-            if civo kubernetes config "{{.CLUSTER_NAME}}" >  "{{.KUBECONFIG_PATH}}"; then
+            if civo --region NYC1 kubernetes config "{{.CLUSTER_NAME}}" >  "{{.KUBECONFIG_PATH}}"; then
               echo "Kubeconfig retrieved successfully and saved to "{{.CLUSTER_NAME}}"."
               break
             else
