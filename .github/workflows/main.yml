@@ -38,7 +38,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add ./results/app_install_results.txt
+        git add ${{ github.workspace }}/results/app_install_results.txt
         git commit -m "Add deployment results" --allow-empty
         # Only push if there are changes to commit
         git diff --quiet && git diff --staged --quiet || git push
