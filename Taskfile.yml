@@ -91,34 +91,45 @@ tasks:
     cmds:
       - cmd: |
           start_time=$(date +%s)
+          job_found=false
+
           while true; do
             echo $(kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get jobs -n default -o name)
             job_name=$(kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get jobs -n default -o name | grep "{{.APP_NAME}}" | sed 's|job.batch/||')
-            if [ -z "$job_name" ]; then
-              echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: Job not found" >> "{{.RESULT_FILE}}"
-              exit 1
-            fi
-            echo "Job found for {{.APP_NAME}}: $job_name, checking status..."
+            
+            if [ -n "$job_name" ]; then
+              job_found=true
+              echo "Job found for {{.APP_NAME}}: $job_name, checking status..."
 
-            if kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get job $job_name -n default -o jsonpath='{.status.succeeded}' | grep -q "1"; then
-              echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: SUCCESS" >> "{{.RESULT_FILE}}"
-              break
+              if kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get job $job_name -n default -o jsonpath='{.status.succeeded}' | grep -q "1"; then
+                echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: SUCCESS" >> "{{.RESULT_FILE}}"
+                break
+              fi
+            else
+              echo "Checking for job creation..."
             fi
 
             current_time=$(date +%s)
             elapsed_time=$((current_time - start_time))
+            
             if [ $elapsed_time -ge 300 ]; then
-              echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: FAILED or TIMED OUT after 5 minutes" >> "{{.RESULT_FILE}}"
-              # Attempt to get logs from the pod corresponding to the job if the job fails or times out
-              pod_name=$(kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get pod -l job-name="$job_name" -n default -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
-              if [ -n "$pod_name" ]; then
-                echo "Fetching logs from pod: $pod_name"
-                kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" logs "$pod_name" -n default >> "{{.RESULT_FILE}}"
+              if [ "$job_found" = true ]; then
+                echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: FAILED or TIMED OUT after 5 minutes" >> "{{.RESULT_FILE}}"
+                # Attempt to get logs from the pod corresponding to the job if the job fails or times out
+                pod_name=$(kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get pod -l job-name="$job_name" -n default -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+                if [ -n "$pod_name" ]; then
+                  echo "Fetching logs from pod: $pod_name"
+                  kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" logs "$pod_name" -n default >> "{{.RESULT_FILE}}"
+                fi
+              else
+                echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: Job not found within 5 minutes" >> "{{.RESULT_FILE}}"
               fi
               exit 1
             fi
+
             sleep 10
           done
+        silent: false
     vars:
       APP_NAME: '{{.APP_NAME}}'
 
