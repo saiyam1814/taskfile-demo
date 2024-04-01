@@ -72,7 +72,7 @@ tasks:
           while true; do
             echo "Attempting to retrieve kubeconfig..."
             if civo --region FRA1 kubernetes config "{{.CLUSTER_NAME}}" >  "{{.KUBECONFIG_PATH}}"; then
-              echo "Kubeconfig retrieved successfully and saved to "{{.CLUSTER_NAME}}"."
+              echo "Kubeconfig retrieved successfully and saved to "{{.KUBECONFIG_PATH}}"."
               break
             else
               echo "Failed to retrieve kubeconfig, retrying in 10 seconds..."
@@ -92,6 +92,7 @@ tasks:
       - cmd: |
           start_time=$(date +%s)
           while true; do
+            echo $(kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get jobs -n default -o name)
             job_name=$(kubectl --kubeconfig "{{.KUBECONFIG_PATH}}" get jobs -n default -o name | grep "{{.APP_NAME}}" | sed 's|job.batch/||')
             if [ -z "$job_name" ]; then
               echo "{{.APP_NAME}} on Kubernetes Version {{.KUBE_VERSION}}: Job not found" >> "{{.RESULT_FILE}}"
