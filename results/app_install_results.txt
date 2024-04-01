@@ -1,0 +1,28 @@
+rancher on Kubernetes Version : FAILED
+{"time":"2024-04-01T11:52:55.906757582Z","level":"INFO","msg":"Cloneing git repo https://github.com/civo/kubernetes-marketplace\n"}
+{"time":"2024-04-01T11:52:55.906912426Z","level":"INFO","msg":"Creating temp dir to clone git repo"}
+{"time":"2024-04-01T11:52:55.907641589Z","level":"INFO","msg":"Created temp dir: /tmp/prefix675624117"}
+{"time":"2024-04-01T11:52:57.337873599Z","level":"INFO","msg":"Validating that app exists: rancher\n"}
+{"time":"2024-04-01T11:52:57.337957936Z","level":"INFO","msg":"Running App Install"}
+{"time":"2024-04-01T11:52:57.338245084Z","level":"INFO","msg":"Cheking the install.sh is preset or not"}
+{"time":"2024-04-01T11:52:57.338282615Z","level":"INFO","msg":"Running the install.sh"}
+{"time":"2024-04-01T11:52:57.338295032Z","level":"INFO","msg":"Making the shell file executable"}
+{"time":"2024-04-01T11:52:57.339391354Z","level":"INFO","msg":"Command output","stdout":""}
+{"time":"2024-04-01T11:52:57.339435746Z","level":"ERROR","msg":"Command output","stderr":""}
+{"time":"2024-04-01T11:52:57.339616776Z","level":"INFO","msg":"Running the shell file"}
+{"time":"2024-04-01T11:52:57.33984934Z","level":"INFO","msg":"Shell file contents","shellFile":"IyEvYmluL3NoCgpzdWJkb21haW49InJhbmNoZXIuZDIxZTVkNWMtZTI0OC00YTAyLTk1M2UtMjI5YTE3NGZjODQ4Lms4cy5jaXZvLmNvbSIKZW1haWw9InNhaXlhbUBjaXZvLmNvbSIKZWNobyAiJHN1YmRvbWFpbiIKZWNobyAic2FpeWFtQGNpdm8uY29tIgojV2FpdCBmb3IgdGhlIENlcnQgTWFuYWdlciBkZXBsb3ltZW50IHRvIGJlIGRvbmUuCmlmIGt1YmVjdGwgZ2V0IG5zIHwgZ3JlcCAtcSBjZXJ0LW1hbmFnZXI7IHRoZW4KICAgIGVjaG8gImNlcnQtbWFuYWdlciBuYW1lc3BhY2UgZXhpc3RzLCBwcm9jZWVkaW5nIHRvIG5leHQgY29tbWFuZC4uLiIKICAgICMgUGxhY2UgeW91ciBuZXh0IGNvbW1hbmQgaGVyZQplbHNlCiAgICBzbGVlcCAxMApmaQoKa3ViZWN0bCB3YWl0IC0tZm9yPWNvbmRpdGlvbj1hdmFpbGFibGUgLS10aW1lb3V0PTMwMHMgZGVwbG95bWVudC9jZXJ0LW1hbmFnZXItd2ViaG9vayAgLW4gY2VydC1tYW5hZ2VyCgpoZWxtIHJlcG8gYWRkIHJhbmNoZXItbGF0ZXN0IGh0dHBzOi8vcmVsZWFzZXMucmFuY2hlci5jb20vc2VydmVyLWNoYXJ0cy9sYXRlc3QKaGVsbSByZXBvIHVwZGF0ZQprdWJlY3RsIGNyZWF0ZSBuYW1lc3BhY2UgY2F0dGxlLXN5c3RlbQoKICAKaGVsbSB1cGdyYWRlIC0taW5zdGFsbCByYW5jaGVyIHJhbmNoZXItbGF0ZXN0L3JhbmNoZXIgLS1uYW1lc3BhY2UgY2F0dGxlLXN5c3RlbSAtLXNldCBob3N0bmFtZT0iJHN1YmRvbWFpbiIgLS1zZXQgYm9vdHN0cmFwUGFzc3dvcmQ9IkNnS2tzc1JVZzlTeU5xYkFtU241VWpxRnhuSWZaQSIgLS1zZXQgaW5ncmVzcy50bHMuc291cmNlPWxldHNFbmNyeXB0IC0tc2V0IGxldHNFbmNyeXB0LmluZ3Jlc3MuY2xhc3M9dHJhZWZpayAtLXNldCBsZXRzRW5jcnlwdC5lbWFpbD0ic2FpeWFtQGNpdm8uY29tIiAtLXZlcnNpb24gMi44LjItcmMzCg=="}
+{"time":"2024-04-01T11:53:12.818291944Z","level":"INFO","msg":"Command output","stdout":"rancher.d21e5d5c-e248-4a02-953e-229a174fc848.k8s.civo.com\nsaiyam@civo.com\ndeployment.apps/cert-manager-webhook condition met\n\"rancher-latest\" has been added to your repositories\nHang tight while we grab the latest from your chart repositories...\n...Successfully got an update from the \"rancher-latest\" chart repository\nUpdate Complete. ⎈Happy Helming!⎈\nnamespace/cattle-system created\nRelease \"rancher\" does not exist. Installing it now.\n"}
+{"time":"2024-04-01T11:53:12.818428689Z","level":"ERROR","msg":"Command output","stderr":"Error: chart requires kubeVersion: < 1.28.0-0 which is incompatible with Kubernetes v1.28.7+k3s1\n"}
+Error: exit status 1
+Usage:
+  marketplace-installer install [flags]
+
+Examples:
+install <app name>
+
+Flags:
+  -h, --help   help for install
+
+Global Flags:
+  -d, --git-url string   The git repo to clone from (default "https://git.civo.com/civo/marketplace.git")
+
