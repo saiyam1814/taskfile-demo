@@ -41,8 +41,4 @@ jobs:
         git config --local user.name "GitHub Action"
         git add ${{ github.workspace }}/results/app_install_results.txt
         git commit -s -m "[skip ci] app results" 
-        
-    - name: Push deploy manifests to local repo
-      uses: ad-m/github-push-action@master
-      with: 
-        github_token: ${{ secrets.AUTO_COMMIT_TOKEN }}    
+        git push 
