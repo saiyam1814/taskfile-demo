@@ -19,6 +19,8 @@ jobs:
       run: |
         curl -sL https://taskfile.dev/install.sh | sh
         echo "${HOME}/bin" >> $GITHUB_PATH
+        echo "$PWD/bin" >> $GITHUB_PATH
+
 
     - name: Run Taskfile Commands
       env:
