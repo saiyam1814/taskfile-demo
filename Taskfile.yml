@@ -4,7 +4,7 @@ version: '3'
 vars:
   CLUSTER_NAME: 'apps-demo-cluster'
   REMOVE_APPS: 'metrics-server,traefik2-nodeport'
-  RESULT_FILE: '/tmp/apps/'
+  RESULT_FILE: '/tmp/'
   KUBE_VERSION: ''  # Empty means the default version will be used
   APP_LIST_PATH: './app_list.txt'  # Path to your app list file
   KUBECONFIG_PATH: '/tmp/kubeconfig_{{.CLUSTER_NAME}}'
