@@ -32,7 +32,7 @@ jobs:
     - name: Move Result File
       run: |
         mkdir -p ${{ github.workspace }}/results
-        mv /tmp/apps/* ${{ github.workspace }}/results/
+        mv /tmp/*.txt ${{ github.workspace }}/results/
 
     - name: Commit Results
       run: |
