@@ -1,0 +1,44 @@
+name: Deploy and Test Apps
+
+on:
+  push:
+    branches:
+      - main  # Adjust this as necessary
+
+jobs:
+  deploy-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.17'  # Specify the Go version that matches your project requirements
+
+    - name: Install Task
+      run: |
+        curl -sL https://taskfile.dev/install.sh | sh
+        echo "${HOME}/bin" >> $GITHUB_PATH
+
+    - name: Run Taskfile Commands
+      env:
+        CIVO_API_KEY: ${{ secrets.CIVO_API_KEY }}  # Ensure this secret is set in your GitHub repository
+      run: |
+        task setup-tools
+        task deploy-and-test-apps
+
+    - name: Move Result File
+      run: |
+        mkdir -p ${{ github.workspace }}/results
+        mv /tmp/app_install_results.txt ${{ github.workspace }}/results/app_install_results.txt
+
+    - name: Commit Results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add ./results/app_install_results.txt
+        git commit -m "Add deployment results" --allow-empty
+        # Only push if there are changes to commit
+        git diff --quiet && git diff --staged --quiet || git push
